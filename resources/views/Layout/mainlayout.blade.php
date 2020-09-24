@@ -8,7 +8,7 @@
 <body>
 
   @include('layout.partials.navbar')
-  @section('content')
+  @yield('content')
   @show
 
 @include('layout.partials.footer')

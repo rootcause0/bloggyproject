@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'mysql',
+        'passwords' => 'mysql',
     ],
 
     /*
@@ -46,6 +46,10 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'mysql' => [
+            'driver' => 'session',
+            'provider' => 'mysql',
+          ],
     ],
 
     /*
@@ -68,13 +72,19 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+               'model' => \App\Models\Users::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'mysql' => [
+            'driver' => 'eloquent',
+             'model'=>\App\Models\Users::class,
+             
+          ],
+        /* 
+         'userdatas' => [
+             'driver' => 'database',
+             'table' => 'userdatas',
+         ],
+         */
     ],
 
     /*
@@ -94,7 +104,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
+            'provider' => 'mysql',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

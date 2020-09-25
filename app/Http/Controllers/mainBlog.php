@@ -40,7 +40,7 @@ class mainBlog extends Controller
      return view('Layout/partials/content',['data'=>blog::selectByData($request->get('p'))]);
         }
         catch(\Exception $ex){
-            return View('/Layout/Partials/noCat');
+            return Redirect('/err');
         }
     }
     // There all cat. algorithm goes...
@@ -53,7 +53,7 @@ class mainBlog extends Controller
      return View('/Layout/home',['catData'=>$data]);
      }
      else{
-         return View('/Layout/Partials/noCat');
+        return Redirect('/err');
      }
     }
 
@@ -65,8 +65,8 @@ class mainBlog extends Controller
         Users::create($inputs);   
       }
       catch(\Exception $ex){
-          echo $ex;
-          //return View('/Layout/Partials/noCat');
+          
+        return Redirect('/err');
       }
       return view('/Layout/Partials/regsuccess');
     //
@@ -89,7 +89,7 @@ public function login(Request $req){
      return Redirect('/');
     } 
     else{
-        return view('/Layout/Partials/noCat');
+        return Redirect('/err');
     }
 
     
@@ -112,7 +112,7 @@ public function addCategory(Request $req){
     $category->save();
     }
     catch(\Exception $ex){
-        return View('/Layout/Partials/noCat');
+        return Redirect('/err');
     }
     return Redirect('/');
 }
@@ -133,8 +133,31 @@ return Redirect('/');
 }
 catch(\Exception $ex){
     echo $ex;
-    return View('/Layout/Partials/noCat');
+    return Redirect('/err');
 }
 
+}
+//GET
+public function update(Request $req){
+    $topData = Blog::selectByData($req->get('topid'));
+    return View('/Layout/partials/update',['topData'=>$topData]);
+}
+//POST
+public function updateProc(Request $req){
+    
+    $topData = Blog::selectByData($req->input('topid'));
+    //Couldn't use mass data $topData = ['topic'=>$req->input('topic'),'content'=>$req->input('content'),'author'=>Auth::User()->email,'photolink'=>$req->input('photoLink')];
+    $topData->topic = $req->input('topic');
+    $topData->content = $req->input('content');
+    $topData->catid = $req->input('catName');
+    $topData->photolink = $req->input('photoLink');
+    $topData->save();
+    return Redirect('/');
+}
+public function delete(Request $req){
+    
+    $topData = Blog::selectByData($req->get('topid'));
+    $topData->delete();
+    return Redirect('/');
 }
 }

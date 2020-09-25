@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class category extends Model
 {  
     protected $table = 'categories';
-
+    protected $primaryKey = 'catid';
 
     public function category(){
         return $this-belongsTo('\App\Models\blog','catid');

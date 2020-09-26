@@ -53,20 +53,25 @@ class mainBlog extends Controller
      return View('/Layout/home',['catData'=>$data]);
      }
      else{
-        return Redirect('/err');
+        return View('/Layout/Partials/noCat');
      }
     }
 
     public function register(Request $req){
       $inputs = ['email' => $req->input('email'),'password' => Hash::make($req->input('up2'))]; 
+      //Check if name in use.
+      $validatedData = $req->validate([
+        'email' => 'bail|required|unique:users|max:20',
+      ],['email.unique'=>'The username already exists!']);  // Customize  error message.
       //Try catch. blogs just in case if query goes wrong.
       try{
       
         Users::create($inputs);   
       }
       catch(\Exception $ex){
-          
+        
         return Redirect('/err');
+        
       }
       return view('/Layout/Partials/regsuccess');
     //

@@ -9,11 +9,12 @@
 
  
 
- <div class="row mx-auto">
+
  @php
  $i = 0; // Serves for dynamic col. algorithm.
  @endphp
 @empty($catData)
+<div class="row mx-auto">
 @foreach($allData as $mydata)
 
   @php
@@ -62,12 +63,11 @@ $i = 0;
 @endforeach
 @endempty
 @isset($catData)
-<div class="row mx-auto">
+
 @foreach($catData as $mydata)
 
   
-  
-  
+<div class="row mx-auto">
 <div class="col-lg-12 col-sm-12 col-md-12 mb-2">
 
 <!-- Card -->
